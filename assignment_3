@@ -1,0 +1,46 @@
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+# Set up the WebDriver (make sure you have the appropriate WebDriver for your browser installed)
+driver = webdriver.Chrome()
+
+# Go to Amazon.ca
+driver.get('https://www.amazon.ca/')
+
+# Wait for the search box to be visible
+search_box = WebDriverWait(driver, 10).until(
+    EC.visibility_of_element_located((By.ID, 'twotabsearchtextbox'))
+)
+
+# Search for earphones
+search_box.send_keys('earphones')
+search_box.submit()
+
+# Wait for the first search result to be clickable
+first_result = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.CSS_SELECTOR, '.sg-col-inner h2 a'))
+)
+
+# Click on the first search result
+first_result.click()
+
+# Wait for the 'Buy Now' button to be clickable
+buy_now_button = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.ID, 'buy-now-button'))
+)
+
+# Click on the 'Buy Now' button
+buy_now_button.click()
+
+# Wait for the 'Place your order' button to be clickable
+place_order_button = WebDriverWait(driver, 10).until(
+    EC.element_to_be_clickable((By.CSS_SELECTOR, '#submitOrderButtonId span input'))
+)
+
+# Click on the 'Place your order' button
+place_order_button.click()
+
+# Close the browser
+driver.quit()
